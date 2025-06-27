@@ -1,27 +1,27 @@
 package com.example.libapp.controllers;
 
-import com.example.libapp.DTO.BookDTO;
-import com.example.libapp.repository.models.BookModel;
+import com.example.libapp.DTOs.BookDTO;
+import com.example.libapp.DTOs.BookUpdateDTO;
 import com.example.libapp.services.BookService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 @RestController
 @RequestMapping("/books")
+@AllArgsConstructor
 public class BookController
 {
     private final BookService bookService;
-    public BookController(BookService bookService)
-    {
-        this.bookService = bookService;
-    }
 
     @PostMapping
-    public ResponseEntity<String> AddBook(@RequestBody BookDTO book)
+    public ResponseEntity<String> addBook(@Valid @RequestBody BookDTO book)
     {
         try
         {
-            bookService.AddBook(book);
+            bookService.addBook(book);
             return ResponseEntity.ok("Book successfully added");
         }
         catch (Exception e)
@@ -31,11 +31,11 @@ public class BookController
     }
 
     @GetMapping
-    public ResponseEntity<List<BookModel>> GetBooks()
+    public ResponseEntity<List<BookDTO>> getBooks()
     {
         try
         {
-            List<BookModel> books = bookService.GetBooksList();
+            List<BookDTO> books = bookService.getBooksList();
             return ResponseEntity.ok(books);
         }
         catch (Exception e)
@@ -45,11 +45,11 @@ public class BookController
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookModel> GetBookInfo(@PathVariable Long id)
+    public ResponseEntity<BookDTO> getBookInfo(@PathVariable Long id)
     {
         try
         {
-            BookModel book = bookService.GetBook(id);
+            BookDTO book = bookService.getBook(id);
             return ResponseEntity.ok(book);
         }
         catch (Exception e)
@@ -59,11 +59,11 @@ public class BookController
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookModel> UpdateBook(@PathVariable Long id, @RequestBody BookDTO book)
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @Valid @RequestBody BookUpdateDTO book)
     {
         try
         {
-            BookModel updatedBook = bookService.UpdateBookInfo(id, book);
+            BookDTO updatedBook = bookService.updateBookInfo(id, book);
             return ResponseEntity.ok(updatedBook);
         }
         catch (Exception e)
@@ -73,11 +73,11 @@ public class BookController
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> DeleteBook(@PathVariable Long id)
+    public ResponseEntity<String> deleteBook(@PathVariable Long id)
     {
         try
         {
-            bookService.DeleteBook(id);
+            bookService.deleteBook(id);
             return ResponseEntity.ok("Book successfully deleted");
         }
         catch (Exception e)

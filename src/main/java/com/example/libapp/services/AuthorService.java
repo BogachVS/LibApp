@@ -1,14 +1,15 @@
 package com.example.libapp.services;
 
-import com.example.libapp.DTO.AuthorDTO;
-import com.example.libapp.repository.AuthorRepository;
-import com.example.libapp.repository.models.AuthorModel;
+import com.example.libapp.DTOs.AuthorDTO;
+import com.example.libapp.mappers.AuthorMapper;
+import com.example.libapp.repositories.AuthorRepository;
+import com.example.libapp.models.AuthorModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -16,30 +17,22 @@ public class AuthorService
 {
     private final AuthorRepository authorRepository;
 
-    public void AddAuthor(AuthorDTO body)
+    public void addAuthor(AuthorDTO body)
     {
-        AuthorModel author = new AuthorModel();
-
-        if(body.getName()!=null && !body.getName().isEmpty())
-            author.setName(body.getName());
-        else
-            throw new IllegalArgumentException("Name cannot be empty");
-
-        if(body.getBirth_year() > 0)
-            author.setBirth_year(body.getBirth_year());
-        else
-            throw new IllegalArgumentException("Birth year isn't a valid year");
-
+        AuthorModel author = AuthorMapper.INSTANCE.authorDTOToAuthorModel(body);
         authorRepository.save(author);
     }
 
-    public Page<AuthorModel> GetAuthorsList(Pageable pageable)
+    public Page<AuthorDTO> getAuthorsList()
     {
-        return authorRepository.findAll(pageable);
+        Pageable paging = PageRequest.of(0,10);
+        List<AuthorDTO> authors = AuthorMapper.INSTANCE.authorModelToAuthorDTOList(authorRepository.findAll());
+        return new PageImpl<>(authors,paging,authors.size());
     }
 
-    public AuthorModel GetAuthor(Long id)
+    public AuthorDTO getAuthor(Long id)
     {
-        return authorRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Author Not Found"));
+        AuthorModel author = authorRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Author Not Found"));
+        return AuthorMapper.INSTANCE.authorToAuthorDTO(author);
     }
 }

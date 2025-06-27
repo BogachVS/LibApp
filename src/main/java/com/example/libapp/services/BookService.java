@@ -1,13 +1,17 @@
 package com.example.libapp.services;
 
-import com.example.libapp.DTO.BookDTO;
-import com.example.libapp.repository.AuthorRepository;
-import com.example.libapp.repository.BookRepository;
-import com.example.libapp.repository.models.AuthorModel;
-import com.example.libapp.repository.models.BookModel;
+import com.example.libapp.DTOs.BookDTO;
+import com.example.libapp.DTOs.BookUpdateDTO;
+import com.example.libapp.mappers.BookMapper;
+import com.example.libapp.repositories.AuthorRepository;
+import com.example.libapp.repositories.BookRepository;
+import com.example.libapp.models.AuthorModel;
+import com.example.libapp.models.BookModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.*;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,71 +21,39 @@ public class BookService
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
-    public void AddBook(BookDTO body)
+    public void addBook(BookDTO body)
     {
-        AuthorModel author = authorRepository.findById(body.getAuthor_id()).orElseThrow(()->new EntityNotFoundException("Author not found"));
-        BookModel book = new BookModel();
-
-        if(body.getTitle()!=null && !body.getTitle().isEmpty())
-            book.setTitle(body.getTitle());
-        else
-            throw new IllegalArgumentException("Title cannot be empty");
-
+        AuthorModel author = authorRepository.findById(body.getAuthorId()).orElseThrow(()->new EntityNotFoundException("Author not found"));
+        BookModel book = BookMapper.INSTANCE.bookDTOToBookModel(body);
         book.setAuthor(author);
-
-        if(body.getYear() > author.getBirth_year())
-            book.setPublication_year(body.getYear());
-        else
-            throw new IllegalArgumentException("Year of publishing is not valid");
-
-        if(body.getGenre()!=null && !body.getGenre().isEmpty())
-            book.setGenre(body.getGenre());
-        else throw new IllegalArgumentException("Genre cannot be empty");
-
         bookRepository.save(book);
-
     }
 
-    public List<BookModel> GetBooksList()
+    public List<BookDTO> getBooksList()
     {
-        return bookRepository.findAll();
+        return BookMapper.INSTANCE.booksToBookDTOs(bookRepository.findAll());
     }
 
-    public BookModel GetBook(Long id)
-    {
-        return bookRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Book not found"));
-    }
-
-    public BookModel UpdateBookInfo(Long id, BookDTO body)
+    public BookDTO getBook(Long id)
     {
         BookModel book = bookRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Book not found"));
-
-        if(body.getTitle()!=null && !body.getTitle().isEmpty())
-            book.setTitle(body.getTitle());
-        else
-            throw new IllegalArgumentException("Title cannot be empty");
-
-        if(body.getAuthor_id() != 0)
-        {
-            AuthorModel author = authorRepository.findById(body.getAuthor_id()).orElseThrow(()->new EntityNotFoundException("Author not found"));
-            book.setAuthor(author);
-        }
-        else
-            throw new IllegalArgumentException("Author_id cannot be empty");
-
-        if(body.getYear() > 0)
-            book.setPublication_year(body.getYear());
-        else
-            throw new IllegalArgumentException("Year of publishing is not valid");
-
-        if(body.getGenre()!=null && !body.getGenre().isEmpty())
-            book.setGenre(body.getGenre());
-        else throw new IllegalArgumentException("Genre cannot be empty");
-
-        return bookRepository.save(book);
+        return BookMapper.INSTANCE.bookToBookDTO(book);
     }
 
-    public void DeleteBook(Long id)
+    public BookDTO updateBookInfo(Long id, BookUpdateDTO body)
+    {
+        BookModel book = bookRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Book not found"));
+        if (body.getAuthorId() != null)
+        {
+            AuthorModel author = authorRepository.findById(body.getAuthorId()).orElseThrow(() -> new EntityNotFoundException("Author not found"));
+            book.setAuthor(author);
+        }
+        BookMapper.INSTANCE.updateBookFromBookDTO(body, book);
+        bookRepository.save(book);
+        return BookMapper.INSTANCE.bookToBookDTO(book);
+    }
+
+    public void deleteBook(Long id)
     {
         bookRepository.deleteById(id);
     }
