@@ -5,8 +5,10 @@ import com.example.libapp.models.AuthorModel;
 import com.example.libapp.repositories.AuthorRepository;
 import com.example.libapp.services.AuthorService;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 
 import java.util.*;
@@ -16,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class AuthorServiceTests
 {
-    @Autowired
+    @Mock
     private AuthorRepository authorRepository;
-    @Autowired
+    @InjectMocks
     private AuthorService authorService;
 
     @Test

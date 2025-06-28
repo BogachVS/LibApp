@@ -9,8 +9,12 @@ import com.example.libapp.repositories.BookRepository;
 import com.example.libapp.services.BookService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,15 +22,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class BookServiceTests
 {
-    @Autowired
-    private BookService bookService;
-    @Autowired
+    @Mock
     private BookRepository bookRepository;
-    @Autowired
+    @Mock
     private AuthorRepository authorRepository;
+    @InjectMocks
+    private BookService bookService;
 
     @Test
     void whenAddBook_thenSaveSuccessfully()
