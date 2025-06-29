@@ -1,4 +1,4 @@
-package com.example.libapp.models;
+package com.example.libapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;

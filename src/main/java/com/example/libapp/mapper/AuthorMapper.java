@@ -1,10 +1,10 @@
-package com.example.libapp.mappers;
+package com.example.libapp.mapper;
 
-import com.example.libapp.DTOs.AuthorDTO;
-import com.example.libapp.models.AuthorModel;
+import com.example.libapp.DTO.AuthorDTO;
+import com.example.libapp.model.AuthorModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 @Mapper

@@ -1,9 +1,9 @@
-package com.example.libapp.ServiceTests;
+package com.example.libapp.serviceTest;
 
-import com.example.libapp.DTOs.AuthorDTO;
-import com.example.libapp.models.AuthorModel;
-import com.example.libapp.repositories.AuthorRepository;
-import com.example.libapp.services.AuthorService;
+import com.example.libapp.DTO.AuthorDTO;
+import com.example.libapp.model.AuthorModel;
+import com.example.libapp.repository.AuthorRepository;
+import com.example.libapp.service.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

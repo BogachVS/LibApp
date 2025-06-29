@@ -1,7 +1,7 @@
-package com.example.libapp.mappers;
-import com.example.libapp.DTOs.BookDTO;
-import com.example.libapp.DTOs.BookUpdateDTO;
-import com.example.libapp.models.BookModel;
+package com.example.libapp.mapper;
+import com.example.libapp.DTO.BookDTO;
+import com.example.libapp.DTO.BookUpdateDTO;
+import com.example.libapp.model.BookModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

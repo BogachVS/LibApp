@@ -1,12 +1,12 @@
-package com.example.libapp.ServiceTests;
+package com.example.libapp.serviceTest;
 
-import com.example.libapp.DTOs.BookDTO;
-import com.example.libapp.DTOs.BookUpdateDTO;
-import com.example.libapp.models.AuthorModel;
-import com.example.libapp.models.BookModel;
-import com.example.libapp.repositories.AuthorRepository;
-import com.example.libapp.repositories.BookRepository;
-import com.example.libapp.services.BookService;
+import com.example.libapp.DTO.BookDTO;
+import com.example.libapp.DTO.BookUpdateDTO;
+import com.example.libapp.model.AuthorModel;
+import com.example.libapp.model.BookModel;
+import com.example.libapp.repository.AuthorRepository;
+import com.example.libapp.repository.BookRepository;
+import com.example.libapp.service.BookService;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

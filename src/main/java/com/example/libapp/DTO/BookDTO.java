@@ -1,4 +1,4 @@
-package com.example.libapp.DTOs;
+package com.example.libapp.DTO;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
-package com.example.libapp.repositories;
+package com.example.libapp.repository;
 
-import com.example.libapp.models.AuthorModel;
+import com.example.libapp.model.AuthorModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
