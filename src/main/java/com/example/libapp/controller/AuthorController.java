@@ -18,20 +18,41 @@ public class AuthorController
     @PostMapping
     public ResponseEntity<String> addAuthor(@Valid @RequestBody AuthorDTO author)
     {
-        authorService.addAuthor(author);
-        return ResponseEntity.ok("Author successfully added");
+        try
+        {
+            authorService.addAuthor(author);
+            return ResponseEntity.ok("Author successfully added");
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
     public ResponseEntity<Page<AuthorDTO>> getAuthors()
     {
-        return ResponseEntity.ok(authorService.getAuthorsList());
+        try
+        {
+            return ResponseEntity.ok(authorService.getAuthorsList());
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable Long id)
     {
-        AuthorDTO author = authorService.getAuthor(id);
-        return ResponseEntity.ok(author);
+        try
+        {
+            AuthorDTO author = authorService.getAuthor(id);
+            return ResponseEntity.ok(author);
+        }
+        catch(Exception e)
+        {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -19,5 +19,4 @@ public class BookModel
     @Column(name = "publication_year")
     public int publicationYear;
     public String genre;
-
 }

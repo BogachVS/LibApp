@@ -11,7 +11,6 @@ import java.util.List;
 public interface AuthorMapper
 {
     AuthorMapper INSTANCE = Mappers.getMapper(AuthorMapper.class);
-
     AuthorDTO authorToAuthorDTO(AuthorModel author);
     AuthorModel authorDTOToAuthorModel(AuthorDTO authorDTO);
     List<AuthorDTO> authorModelToAuthorDTOList(List<AuthorModel> authors);
