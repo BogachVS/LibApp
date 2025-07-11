@@ -8,7 +8,7 @@ REST-API приложение на Java для управления библио
 * получить список всех книг (GET/books)
 * получить книгу по ID (GET/books/{id})
 * обновить информацию о книге (PUT/books/{id})
-* удалить книгу (DELETE/books)
+* удалить книгу (DELETE/books/{id})
 ### Author
 * добавить автора (POST/authors)
 * получить список авторов(пагинация) (GET/authors?page=0&size=10)
